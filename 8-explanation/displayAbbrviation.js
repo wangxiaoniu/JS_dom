@@ -2,8 +2,7 @@
 2017-03-24
 dom编程艺术 第八章*/
 function displayAbbrviations(){
-	if(!document.getElementsByTagName || !document.createElement ||
-		!document.createTextNode) return false;//向后兼容，检查兼容
+	if(!document.getElementsByTagName || !document.createElement ||!document.createTextNode) return false;//向后兼容，检查兼容
 	var abbr =document.getElementsByTagName('abbr');//获取所有缩略语
 	var defs=[];
 	for(var i=0;i<abbr.length;i++){//遍历缩略语

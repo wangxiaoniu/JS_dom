@@ -26,7 +26,7 @@ function displayAccesskey(){
 		list.appendChild(item);
 	}
 	//创建标题
-	var header=document.createElement("h2");
+	var header=document.createElement("h3");
 	var header_text=document.createTextNode("Accesskey");
 	header.appendChild(header_text);
 	//
@@ -34,3 +34,4 @@ function displayAccesskey(){
 	document.body.appendChild(list);
 }
 addLoadEvent(displayAccesskey);
+
