@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>第八章充实文本内容 把不可见变可见</title>
+</head>
+<body>
+	<ul id="navigation">
+		<li><a href="index.html" accesskey="1">Home</a></li>
+		<li><a href="seatch.html" accesskey="4">Search</a></li>
+		<li><a href="contact.html" accesskey="9">Contact</a></li>
+	</ul>
+	<h1>what is the document object model?</h1>
+	<p>
+		the <abbr title="world wide web consortium">W3C</abbr> defines the
+		<abbr title="document object model">DOM</abbr>as:
+	</p>
+	<blockquote cite="http://www.w3.org/DOM/">
+		<p>
+			A platform- and language-netral interface that will allow programs and scripts to dynamically access and update th content,structure and style of documents.
+		</p>
+	</blockquote>
+	<p>
+		It is an <abbr title="Application Programming Interface">API</abbr>
+		that can be used to navigate <abbr title="HyperText Markup Language">HTML</abbr> and <abbr title="eXtensible Markup Language">XML</abbr> documents.
+	</p>
+
+
+	<script type="text/javascript" src="addLoadEvent.js"></script>
+	<!-- 加载函数要放在其他函数之前，否则不能正常加载 -->
+	<script type="text/javascript" src="demo.js"></script>
+	<script type="text/javascript" src="displayCitations.js"></script>
+	<script type="text/javascript" src="displayAccesskey.js"></script>
+</body>
+</html>
