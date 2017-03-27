@@ -1,0 +1,6 @@
+div#sideshow{
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	position: relative;
+}
