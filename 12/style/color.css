@@ -60,3 +60,12 @@ header nav a.here:link,header nav a.here:visited,header nav a.here:hover,header 
 	color:#eef;
 	background-color: #799;
 }
+/*live 表格*/
+th{
+	color:#edc;
+	background-color: #455;
+}
+tr td{
+	color:#223;
+	background-color: #eb6;
+}

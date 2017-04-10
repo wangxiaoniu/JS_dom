@@ -94,3 +94,12 @@ article img {
   background-image: url(../images/drummer.gif);
 }
 
+/*photos*/
+#imagegallery li{
+  display: inline;
+}
+
+/*live*/
+td{
+  padding:.5em 3em;
+}
