@@ -103,3 +103,20 @@ article img {
 td{
   padding:.5em 3em;
 }
+dl{
+  
+}
+dt{
+  float: left;
+}
+dd{
+  float: left;
+}
+
+/*contact*/
+fieldset{
+  border:0;
+}
+label{
+  display: block;
+}
