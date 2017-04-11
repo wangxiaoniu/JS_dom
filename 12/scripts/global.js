@@ -145,7 +145,7 @@ function showSection(id) {
   }
 }
 
-
+//about 点击隐藏显示section
 function prepareInternalnav(){
 	if(!document.getElementsByTagName) return false;
 	if(!document.getElementById) return false;
@@ -282,6 +282,166 @@ function displayAbbreviations(){
 	container.appendChild(header);
 	container.appendChild(dlist);
 }
+
+//contact
+//label聚焦失去焦点事件
+function focusLables(){
+	if(!document.getElementsByTagName) return false;
+	var labels=document.getElementsByTagName('lable');
+	for(var i=0;i<labels.length;i++){
+		if(!labels[i].getAttribute('for')) continue;
+		var id=labels[i].getAttribute('for');
+		labels[i].onclick=function(){
+			if(!document.getElementById('id')) return false;
+			var element=document.getElementById('id');
+			element.focus();
+		}
+	}
+}
+//contact 表单占位符 placeholder属性跨浏览器实现
+function resetFields(whichform){
+	if(Modernizr.input.placeholder) return;
+	for(var i=0;i<whichform.elements.length;i++){
+		var element =whichform.elements[i];
+		if(element.type == 'submit') continue;
+		var check =element.placeholder||element.getAttribute('placeholder');
+		if(!check) continue;
+		element.onfocus=function(){
+			var text=this.placeholder||this.getAttribute('placeholder');
+			if(this.value==text){
+				this.value='';
+				this.className='';
+			}
+		}
+		element.onblur=function(){
+			if(this.value==""){
+				this.value=this.placeholder||this.getAttribute('placeholder');
+				this.className="placeholder";
+			}
+		}
+		element.onblur(); 
+	}
+}
+
+
+//判断必填项是否为空
+function isFilled(field){
+	if(field.value.replace('','').length==0) return false;
+	var placeholder=field.placeholder||field.getAttribute('placeholder');
+	return(field.value != placeholder);
+}
+//邮箱验证
+function isEmail(field){
+	return (field.value.indexOf('@')!= -1 && field.value.indexOf('.') != -1)
+}
+//表单验证
+function validateForm(whichform){
+	for(var i=0;i<whichform.elements.length;i++){
+		var element=whichform.elements[i];
+		if(element.required=='required'){
+			if(!isFilled(element)){
+				alert('Please fill in the'+element.name+'field.');
+				return false;
+			}
+		}
+		if(element.type=='email'){
+			if(!isEmail(elment)){
+				alert('The'+element.name+"field mush be a valid email address.");
+				return false;
+			}
+		}
+	}
+	return true;
+
+}
+//提交表单
+function prepareForms(){
+	for(var i=0;i<document.forms.length;i++){
+		var thisform =document.forms[i];
+		resetFields(thisform);
+		thisform.onsubmit=function(){
+			if(!validateForm(this)) return false;
+			var article=document.getElementsByTagName('article')[0];
+			if(submitFormWithAjax(this,article)) return false;
+			return true;
+		}
+	}
+}
+//表单请求ajax
+
+function getHTTPObject() {
+  if (typeof XMLHttpRequest == "undefined")
+    XMLHttpRequest = function () {
+      try { return new ActiveXObject("Msxml2.XMLHTTP.6.0"); }
+        catch (e) {}
+      try { return new ActiveXObject("Msxml2.XMLHTTP.3.0"); }
+        catch (e) {}
+      try { return new ActiveXObject("Msxml2.XMLHTTP"); }
+        catch (e) {}
+      return false;
+  }
+  return new XMLHttpRequest();
+}
+
+function displayAjaxLoading(element) {
+    // Remove the existing content.
+  while (element.hasChildNodes()) {
+      element.removeChild(element.lastChild);
+  }
+  //  Create a loading image.
+  var content = document.createElement("img");
+  content.setAttribute("src","images/loading.gif");
+  content.setAttribute("alt","Loading...");
+  // Append the loading element.
+  element.appendChild(content);
+}
+
+function submitFormWithAjax( whichform, thetarget ) {
+  
+  var request = getHTTPObject();
+  if (!request) { return false; }
+
+  // Display a loading message.
+  displayAjaxLoading(thetarget);
+
+  // Collect the data.
+  var dataParts = [];
+  var element;
+  for (var i=0; i<whichform.elements.length; i++) {
+    element = whichform.elements[i];
+    dataParts[i] = element.name + '=' + encodeURIComponent(element.value);
+  }
+  var data = dataParts.join('&');
+
+  request.open('POST', whichform.getAttribute("action"), true);
+  request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+  request.onreadystatechange = function () {
+    if (request.readyState == 4) {
+        if (request.status == 200 || request.status == 0) {
+          var matches = request.responseText.match(/<article>([\s\S]+)<\/article>/);
+          if (matches.length > 0) {
+            thetarget.innerHTML = matches[1];
+          } else {
+            thetarget.innerHTML = '<p>Oops, there was an error. Sorry.</p>';
+          }
+        } else {
+          thetarget.innerHTML = '<p>' + request.statusText + '</p>';
+        }
+    }
+  };
+
+  request.send(data);
+   
+  return true;
+};
+
+
+
+
+
+addLoadEvent(prepareForms);
+addLoadEvent(focusLables);
 addLoadEvent(stripeTables);
 addLoadEvent(highlightRows);
 addLoadEvent(displayAbbreviations);
