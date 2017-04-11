@@ -322,8 +322,6 @@ function resetFields(whichform){
 		element.onblur(); 
 	}
 }
-
-
 //判断必填项是否为空
 function isFilled(field){
 	if(field.value.replace('','').length==0) return false;
@@ -338,22 +336,28 @@ function isEmail(field){
 function validateForm(whichform){
 	for(var i=0;i<whichform.elements.length;i++){
 		var element=whichform.elements[i];
-		if(element.required=='required'){
+		if(element.getAttribute("required") == 'required'){
 			if(!isFilled(element)){
 				alert('Please fill in the'+element.name+'field.');
 				return false;
 			}
 		}
-		if(element.type=='email'){
-			if(!isEmail(elment)){
+		if (element.getAttribute("type") == 'email') {
+			if (!isEmail(element)) {
+			
 				alert('The'+element.name+"field mush be a valid email address.");
 				return false;
 			}
 		}
+
+	
 	}
 	return true;
 
 }
+
+
+
 //提交表单
 function prepareForms(){
 	for(var i=0;i<document.forms.length;i++){
@@ -435,6 +439,7 @@ function submitFormWithAjax( whichform, thetarget ) {
    
   return true;
 };
+
 
 
 
